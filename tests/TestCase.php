@@ -29,9 +29,6 @@ abstract class TestCase extends Orchestra
         $app['config']->set('mail.default', 'zeptomail');
         $app['config']->set('mail.from.address', 'noreply@example.com');
         $app['config']->set('mail.from.name', 'Laravel ZeptoMail');
-        $app['config']->set('mail.mailers.zeptomail', [
-            'transport' => 'zeptomail',
-            'token' => 'test-token',
-        ]);
+        $app['config']->set('zeptomail.token', 'test-token');
     }
 }

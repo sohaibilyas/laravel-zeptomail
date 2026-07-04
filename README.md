@@ -8,12 +8,6 @@ A Laravel mail transport for sending mail through [Zoho ZeptoMail](https://www.z
 composer require sohaibilyas/laravel-zeptomail
 ```
 
-Publish the config file when you want to customize the API endpoint or request timeout:
-
-```bash
-php artisan vendor:publish --tag=zeptomail-config
-```
-
 ## Configuration
 
 Add your ZeptoMail token to `.env`:
@@ -26,7 +20,21 @@ ZEPTOMAIL_API_VERSION=v1.1
 
 You may also pass only the raw token value. The transport will add the `Zoho-enczapikey` prefix automatically.
 
-Add a ZeptoMail mailer to `config/mail.php`:
+The package automatically registers a `zeptomail` Laravel mailer. Set it as your default mailer:
+
+```dotenv
+MAIL_MAILER=zeptomail
+MAIL_FROM_ADDRESS=noreply@example.com
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+Publishing the config file is optional. Use it only when you want the ZeptoMail package config in your app:
+
+```bash
+php artisan vendor:publish --tag=zeptomail-config
+```
+
+If you prefer to configure ZeptoMail inside Laravel's mail config instead, you may add a `zeptomail` entry to `config/mail.php`:
 
 ```php
 'mailers' => [
@@ -38,14 +46,6 @@ Add a ZeptoMail mailer to `config/mail.php`:
         'timeout' => env('ZEPTOMAIL_TIMEOUT', 30),
     ],
 ],
-```
-
-Then set it as your default mailer:
-
-```dotenv
-MAIL_MAILER=zeptomail
-MAIL_FROM_ADDRESS=noreply@example.com
-MAIL_FROM_NAME="${APP_NAME}"
 ```
 
 ## Usage

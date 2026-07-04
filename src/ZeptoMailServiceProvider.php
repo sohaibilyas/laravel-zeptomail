@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Reseek\LaravelZeptoMail;
 
+use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Mail\MailManager;
 use Illuminate\Support\ServiceProvider;
@@ -13,6 +14,13 @@ final class ZeptoMailServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/zeptomail.php', 'zeptomail');
+
+        /** @var ConfigRepository $config */
+        $config = $this->app->make('config');
+
+        $config->set('mail.mailers.zeptomail', array_merge([
+            'transport' => 'zeptomail',
+        ], $config->get('mail.mailers.zeptomail', [])));
     }
 
     public function boot(): void

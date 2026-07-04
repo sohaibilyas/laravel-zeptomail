@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Tests\Fixtures\WelcomeMail;
 
+it('defines the zeptomail mailer automatically', function (): void {
+    expect(config('mail.mailers.zeptomail.transport'))->toBe('zeptomail');
+});
+
 it('registers a zeptomail mail transport with laravel', function (): void {
     Http::fake([
         'https://api.zeptomail.com/v1.1/email' => Http::response(['message' => 'ok'], 201),
